@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Share2Agent",
+  "description": "Share any page with your AI agent via webhook",
+  "version": "0.4.0",
+  "homepage_url": "https://github.com/mnardit/share2agent",
+  "minimum_chrome_version": "103",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "Share with Agent",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

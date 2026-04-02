@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Share2Agent Settings</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    h1 { font-size: 20px; margin-bottom: 20px; }
+    h2 { font-size: 16px; margin-bottom: 12px; font-weight: 600; }
+
+    /* Form */
+    .form-row { margin-bottom: 12px; }
+    label { display: block; font-weight: 500; margin-bottom: 4px; font-size: 13px; }
+    input[type="text"],
+    input[type="url"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .color-presets { display: flex; gap: 6px; margin-top: 4px; }
+    .color-dot {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+    }
+    .color-dot.selected { border-color: #333; box-shadow: 0 0 0 2px rgba(0,0,0,0.1); }
+    .color-dot:hover { transform: scale(1.15); }
+    input:focus {
+      border-color: #4A90D9;
+      outline: 2px solid #4A90D9;
+      outline-offset: 1px;
+    }
+    .hint { font-size: 12px; color: #767676; margin-top: 4px; }
+    .hint a { color: #3578b9; text-decoration: none; }
+    .hint a:hover { text-decoration: underline; }
+    .inline-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .inline-row .form-row { flex: 1; margin-bottom: 0; }
+    .inline-row .form-row.color-field { flex: 0 0 auto; }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    button[type="submit"] {
+      padding: 8px 20px;
+      background: #3578b9;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover { background: #3a7bc8; }
+    button[type="submit"]:focus-visible {
+      outline: 2px solid #4A90D9;
+      outline-offset: 2px;
+    }
+    #testBtn {
+      padding: 8px 16px;
+      background: #f5f5f5;
+      color: #555;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    #testBtn:hover { border-color: #3578b9; color: #3578b9; }
+    #cancelBtn {
+      font-size: 13px;
+      color: #767676;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      text-decoration: underline;
+    }
+    #cancelBtn:hover { color: #4A90D9; }
+
+    #status { margin-top: 12px; font-size: 14px; }
+    .success { color: #2e7d32; }
+    .error { color: #c62828; }
+
+    /* Agent list */
+    .agent-list { margin-top: 24px; }
+    .agent-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .agent-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .agent-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .agent-info-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .agent-info-url {
+      font-size: 12px;
+      color: #767676;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 260px;
+    }
+    .agent-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .agent-actions button {
+      font-size: 12px;
+      color: #767676;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+    .agent-actions button:hover { color: #4A90D9; }
+    .agent-actions .btn-delete:hover { color: #c62828; }
+    .empty-list {
+      font-size: 13px;
+      color: #767676;
+      padding: 16px 0;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      body { background: #1e1e1e; color: #e0e0e0; }
+      input[type="text"],
+      input[type="url"] { background: #2d2d2d; border-color: #444; color: #e0e0e0; }
+      .color-dot.selected { border-color: #e0e0e0; }
+      input:focus { border-color: #5a9de6; outline-color: #5a9de6; }
+      button[type="submit"] { background: #4080c0; }
+      button[type="submit"]:hover { background: #3570a8; }
+      #testBtn { background: #2d2d2d; border-color: #444; color: #aaa; }
+      #testBtn:hover { border-color: #5a9de6; color: #5a9de6; }
+      #cancelBtn { color: #999; }
+      #cancelBtn:hover { color: #5a9de6; }
+      .error { color: #ef5350; }
+      .success { color: #66bb6a; }
+      .agent-item { border-color: #3A3A3C; }
+      .agent-info-url { color: #999; }
+      .agent-actions button { color: #999; }
+      .agent-actions button:hover { color: #5a9de6; }
+      .agent-actions .btn-delete:hover { color: #ef5350; }
+      .empty-list { color: #999; }
+      .hint { color: #999; }
+      .hint a { color: #5a9de6; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Share2Agent Settings</h1>
+
+  <form id="agentForm">
+    <div class="inline-row">
+      <div class="form-row">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="My Agent">
+      </div>
+      <div class="form-row">
+        <label for="emoji">Emoji</label>
+        <input type="text" id="emoji" placeholder="🤖" maxlength="4" style="width:60px">
+      </div>
+      <div class="form-row color-field">
+        <label>Color</label>
+        <div class="color-presets" id="colorPresets">
+          <button type="button" class="color-dot selected" data-color="#3578b9" style="background:#3578b9"></button>
+          <button type="button" class="color-dot" data-color="#e74c3c" style="background:#e74c3c"></button>
+          <button type="button" class="color-dot" data-color="#2ecc71" style="background:#2ecc71"></button>
+          <button type="button" class="color-dot" data-color="#f39c12" style="background:#f39c12"></button>
+          <button type="button" class="color-dot" data-color="#9b59b6" style="background:#9b59b6"></button>
+          <button type="button" class="color-dot" data-color="#1abc9c" style="background:#1abc9c"></button>
+          <button type="button" class="color-dot" data-color="#e67e22" style="background:#e67e22"></button>
+          <button type="button" class="color-dot" data-color="#555555" style="background:#555555"></button>
+        </div>
+        <input type="hidden" id="color" value="#3578b9">
+      </div>
+    </div>
+    <div class="form-row" style="margin-top:12px">
+      <label for="webhookUrl">Webhook URL</label>
+      <input type="url" id="webhookUrl" placeholder="https://your-endpoint.com/webhook">
+      <div class="hint">Don't have a webhook URL? <a href="https://max.nardit.com/share2agent/guides/" target="_blank" rel="noopener">See setup guides</a> for n8n, Zapier, Make, and more.</div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" id="submitBtn">Add Agent</button>
+      <button type="button" id="testBtn" style="display:none">Test</button>
+      <button type="button" id="cancelBtn" style="display:none">Cancel</button>
+    </div>
+  </form>
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <div class="agent-list">
+    <h2>Saved agents</h2>
+    <div id="agentList"></div>
+  </div>
+
+  <script src="storage.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

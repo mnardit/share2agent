@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Share2Agent</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-top">
+        <h1>Share2Agent</h1>
+        <button id="settingsLink" class="btn-settings" aria-label="Settings" title="Settings">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 01-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 01-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 01.52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 011.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 011.255-.52l.292.16c1.64.892 3.434-.901 2.54-2.541l-.159-.292a.873.873 0 01.52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 01-.52-1.255l.16-.292c.892-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 01-1.255-.52l-.094-.319z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="page-card" id="pageCard">
+      <div class="page-title" id="pageTitle"></div>
+      <div class="page-url" id="pageUrl"></div>
+    </div>
+
+    <div id="agentPicker" class="agent-picker"></div>
+    <div id="agentLabel" class="agent-label"></div>
+    <div id="noAgents" class="no-agents" style="display:none">
+      <div class="empty-icon">🤖</div>
+      <div class="empty-title">Send pages to your AI agents</div>
+      <div class="empty-desc">Connect a webhook endpoint to start sharing pages, screenshots, and transcripts.</div>
+      <button id="setupLink" class="btn-setup">Add your first agent</button>
+    </div>
+
+    <label class="field-label" for="comment">Instruction <span class="optional">(optional)</span></label>
+    <textarea id="comment" placeholder="e.g. Summarize this, Extract tasks, Translate..." rows="1" aria-label="Instruction for the agent"></textarea>
+
+    <div class="section-label">Quick actions</div>
+    <div class="quick-chips">
+      <button type="button" class="chip" data-text="Summarize this page">Summarize</button>
+      <button type="button" class="chip" data-text="Extract key points and action items">Extract tasks</button>
+      <button type="button" class="chip" data-text="Save this for reference">Save</button>
+      <button type="button" class="chip" data-text="Analyze and give recommendations">Analyze</button>
+    </div>
+
+    <label class="toggle-row" id="screenshotRow">
+      <div>
+        <span class="toggle-label">Full-page screenshot</span>
+        <span class="toggle-helper">Capture the whole page, not just visible area</span>
+      </div>
+      <span class="toggle">
+        <input type="checkbox" id="includeScreenshot">
+        <span class="toggle-slider"></span>
+      </span>
+    </label>
+
+    <button id="sendBtn" class="btn-send">Send</button>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

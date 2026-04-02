@@ -1,0 +1,8 @@
+node_modules/
+*.tgz
+.DS_Store
+.worktrees/
+.mcp.json
+.claude/
+test-webhook.py
+content-debug.js
